@@ -60,12 +60,37 @@
     @endif
 
     <script>
-        //close the alert after 3 seconds.
-        $(document).ready(function(){
-	    setTimeout(function() {
-	        $(".alert").alert('close');
-	    }, 3000);
-    	});
+
+
+        function formValidation(){
+            var validation = true;
+            var name = document.forms["contact-form"]["name"].value;
+            var email = document.forms["contact-form"]["email"].value;
+            var city = document.forms["contact-form"]["city"].value;
+            var phone = document.forms["contact-form"]["phone"].value;
+            var message = document.forms["contact-form"]["message"].value;
+            if(name == ""){
+                document.getElementById('name_err').innerHTML = "name is mandatory";
+                        validation = false;
+            }
+             if(email == ""){
+              document.getElementById('email_err').innerHTML = "name is mandatory";
+               validation = false;
+            }
+             if(city == "select"){
+               document.getElementById('city_err').innerHTML = "city is mandatory";
+               validation = false;
+            }
+             if(phone == ""){
+               document.getElementById('phone_err').innerHTML = "phone is mandatory";
+               validation = false;
+            }
+             if(message == ""){
+               document.getElementById('message_err').innerHTML = "message is mandatory";
+               validation = false;
+            }
+            return validation;
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

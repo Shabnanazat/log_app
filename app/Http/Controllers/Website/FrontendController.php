@@ -41,7 +41,7 @@ class FrontendController extends Controller
         $enquiry = $request->all();
         Enquiry::create($enquiry);
         if($enquiry){
-            return redirect(route('contact'))->with('message',"Your Enquirey has recieved Our Representative will contact You shortly Successfully !");
+            return redirect(route('contact'))->with('message',"Your Enquirey has recieved Successfully !");
          }else{
            return back()->with('message','Sorry Action Failed !'); 
          }
