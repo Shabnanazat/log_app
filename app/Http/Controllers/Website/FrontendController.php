@@ -46,8 +46,6 @@ class FrontendController extends Controller
            return back()->with('message','Sorry Action Failed !'); 
          }
         }
-
-      
     }
 
 

@@ -45,6 +45,7 @@
       <th><b>slug</b></th>
       <th><b>Description</b></th>
       <th><b>Category</b></th>
+      <th><b>Image</b></th>
       <th><b>Edit</b></th>
       <th><b>Delete</b></th>
     </tr>
@@ -56,13 +57,16 @@
         <td>{{ $blog->tittle }}</td>
         <td>{{ $blog->slug }}</td>
         <td>{{ $blog->description }}</td>
-        <td>{{ $blog->category->category_name }}</td>
+        <td>{{ $blog->category }}</td>
+        {{-- <td> <img src="{{ asset('storage/blogs/blog_images/'.$blog->image) }}" alt="blog-image" ></td> --}}
+       <td> <img class="img" src="{{ \Storage::disk('public')->url('blogs/blog_images/'.$blog['image']) }}"alt="blog-image" ></td>
         <td>
         <a
          href="{{route('blogs.edit',[$blog->id]) }}"
                class="btn btn-primary"><i
         class="fa fa-pencil-square-o"></i>Edit</a>
         </td>
+        
         <td>
 
          <form method="POST" action="{{ route('blogs.destroy',[$blog->id]) }}" accept-charset="UTF-8" style="display:inline">

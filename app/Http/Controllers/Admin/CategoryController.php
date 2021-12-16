@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 class CategoryController extends Controller
 {
     public function index(){
@@ -16,11 +19,20 @@ class CategoryController extends Controller
 
         return view('admin.Categories.create');
     }
-    public function store(Request $request){
+        public function store(Request $request){
+            //$imageName = '';
+            $validator = $request->validate(['category_name'=>'required']);
+            if($request->hasFile('icon')){
+                $imageName = time()."_category.". $request->file('icon')->getClientOriginalExtension();  
+         
+                storage::disk('public')->putFileAs('/admin/category/',$request->file('icon'), $imageName);
+                }  
 
-        $validator = $request->validate(['category_name'=>'required']);
-
-        $action =  Category::create($request->except('_token'));
+             $action =  Category::create([
+               'category_name' => $request['category_name'],
+                'status' => $request['status'],
+                'icon' => $imageName,
+           ]);
 
        if($action){
           return redirect(route('categories.index'))->with('message',"Category Created Successfully !");
@@ -48,10 +60,8 @@ class CategoryController extends Controller
     public function edit(Category $category,$id)
     {
        // $categories = categories::where('id',$id)->first(); 
-        $category = Category::find($id);   
-       
-         return view('admin.categories.edit',compact('category'));
-        
+        $category = Category::find($id);      
+         return view('admin.categories.edit',compact('category'));       
     }
 
     /**
@@ -68,13 +78,23 @@ class CategoryController extends Controller
             'category_name' => 'required|max:100|string',
             'status' => 'required|integer|max:1',
         ]);
+     
         $data = $request->except(['_token','category_id']);
-        $category = Category::find($request->category_id)->update($data);
+        $doc = Category::find($request->category_id)->first();  
+        dd($doc) ;       
+        if ($request->hasFile('icon')) {         
+           if(Storage::disk('public')->exists('admin/category/'.$doc['icon'])) {
+               Storage::disk('public')->delete('admin/category/'.$doc['icon']);
+           }               
+           $imageName = time()."icon.". $request->file('icon')->getClientOriginalExtension();      
+           storage::disk('public')->putFileAs('/admin/category/',$request->file('icon'), $imageName);
+           $data['icon'] = $imageName; 
 
+        }
+
+        $doc->update($data);
         return redirect()->route('categories.index')->with('success','category updated successfully');
-            
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -84,9 +104,13 @@ class CategoryController extends Controller
     public function destroy(Request $request,$id)
     {
        
-       
-        $category = Category::find($id)->delete();
+        $doc = Category::find($id)->first();
         
+        if(Storage::disk('public')->exists('admin/category/'.$doc['icon'])) {
+          Storage::disk('public')->delete('admin/category/'.$doc['icon']);
+      }
+         $doc->delete();
+         
         return redirect()->route('categories.index')->with('success','category deleted successfully');
     }
     }

@@ -70,14 +70,14 @@
             var phone = document.forms["contact-form"]["phone"].value;
             var message = document.forms["contact-form"]["message"].value;
             if(name == ""){
-                document.getElementById('name_err').innerHTML = "name is mandatory";
-                        validation = false;
+              document.getElementById('name_err').innerHTML = "name is mandatory";
+               validation = false;
             }
              if(email == ""){
               document.getElementById('email_err').innerHTML = "name is mandatory";
                validation = false;
             }
-             if(city == "select"){
+             if(city == ""){
                document.getElementById('city_err').innerHTML = "city is mandatory";
                validation = false;
             }

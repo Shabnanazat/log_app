@@ -32,7 +32,7 @@
 
 @section('content')
 <div id="myDIV" class="header">  
-<h1><b><i>CATEGORY</i><b></h1>
+<h1>CATEGORY</h1>
 <a href="{{route('categories.create')}}">Add Category</a>
 </div>
 @if (Session::has('success'))
@@ -43,6 +43,7 @@
     <tr>
       <th>Sl Num</th>
       <th>Name</th>
+      <th>icon</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -52,7 +53,9 @@
       <tr>
         <td class="index">{{ $loop->iteration }}</td>
         <td>{{ $item->category_name }}</td>
+        <td> <img class="img" src="{{ asset('storage/admin/category/'.$item->icon) }}"alt="blog-image" ></td>
         <td>
+      
         <a
          href="{{route('categories.edit',[$item->id]) }}"
                class="btn btn-primary"><i

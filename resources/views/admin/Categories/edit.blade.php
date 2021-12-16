@@ -10,12 +10,14 @@
 @section('content')
  
 <h2> Add post type</h2>
-<form action="{{route('categories.update')}}" method="post">
+<form action="{{route('categories.update')}}" method="post" enctype="multipart/form-data">
     
     @csrf
     <input type="hidden" name="category_id" value="{{ $category->id }}">
     <label for="cname">name:</label><br>
     <input type="text" id="name" name="category_name" value="{{ $category->category_name }}"><br>
+    <label for="status">status:</label><br>
+    <input type="file" name="icon"><br>
     <label for="status">status:</label><br>
     {{-- <input type="text" id="status" name="status"><br>
     --}}

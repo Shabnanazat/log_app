@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Support\Facades\Storage;
 //use Illuminate\Database\Eloquent\softDeletes;
 
 class Blog extends Model
@@ -13,7 +15,7 @@ class Blog extends Model
     
     // protected $guarded = array();
    protected $fillable = [
-      'tittle', 'description','status','slug','user_id','category_id'
+      'tittle', 'description','status','slug','user_id','category_id','image',
     ];
     public function owner()
     {
@@ -23,4 +25,18 @@ class Blog extends Model
     {
         return $this->hasOne(Category::class,'id','category_id');
     }
+    
+    public function getPhotoAttribute(): string
+    {
+        if ($this->image) {
+            return Storage::disk('public')->url('blogs/blog_images/'.$this->image);
+        } else {
+            return '';
+        }
+    }   
+    public function blogImages()
+    {
+        return $this->hasMany(BlogImage::class,'blog_id','id');
+    }
+        
 }

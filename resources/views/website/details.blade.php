@@ -13,9 +13,22 @@
       <Li> <p><b>{{ $blog->tittle }}</b></p> </Li>  
       <Li>Posted On :- {{  date("d M Y", strtotime($blog->created_at)) }}</Li>  
       <Li>Auther :-  {{ $blog->owner->first_name }}</Li>        
-      <Li>Details :-  {{ $blog->description}}</Li>        
+      <Li>Details :-  {{ $blog->description}}</Li>
+      <li>
+      <img src="{{ $blog->photo }}">
+      </li>    
             
     </ul>
+@if (!empty($blogs->blogImage))
+<ul>
+  @foreach($blogs->blogImage as $blog)
+  <li>
+
+  <<img style="width: 10px; height:10px;" src="{{ $blog->image_url }}" >
+  </li>
+@endforeach
+</ul>
+@endif
 
   </div>
 </body>

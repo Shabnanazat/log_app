@@ -19,7 +19,7 @@
             <tbody>
                 <tr>
                     <td>Name:</td>
-                    <td> <input type="text" name="name" id="name" >
+                    <td> <input type="text" name="name" value="{{ old('name')  }}" id="name" >
                     <p id="name_err"></p>
                     {!!$errors->first('name','<p>:message <p>')!!}
                 
@@ -28,7 +28,7 @@
                 <tr>
                
                     <td>Email:</td>
-                    <td> <input type="email" name="email" >
+                    <td> <input type="email" name="email" value="{{ old('email') }}" id="email">
                      <p id="email_err"></p>
                     {!!$errors->first('email','<p>:message <p>')!!}
                      </td>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>Phone:</td>
-                    <td> <input type="text" name="phone" id="phone" >
+                    <td> <input type="text" name="phone" value="{{ old('phone') }}" id="phone" >
                      <p id="phone_err"></p>
                     {!!$errors->first('phone','<p>:message <p>')!!}
                      </td>
@@ -46,20 +46,24 @@
                 
                     <td>City:</td>
 
-                    <td> <select name="city"style="color: green"> 
-                        <option value="select city"> select city</option>
-                        <option value="calicut" > Calicut </option>
-                        <option value="kochi" > Kochi </option>
-                        <option value="kannur" > Kannur </option>
-                        <option value="wayanad" > Wayanad </option>
-                        <option value="munnar" > Munnar </option>
-                        
+                    <td> <select name="city"style="color: green" > 
+                        <option {{ (old('city') == "") ? 'selected' : '' }} value="">Select city</option>
+                        <option {{ (old('city') == 'calicut') ? 'selected' : '' }} value="calicut"> Calicut </option>
+                        <option {{ (old('city') == 'kochi') ? 'selected' : '' }} value="kochi"> Kochi </option>
+                        <option {{ (old('city') == 'kannur') ? 'selected' : '' }} value="kannur"> Kannur </option>
+                        <option {{ (old('city') == 'wayanad') ? 'selected' : '' }} value="wayanad"> Wayanad </option>
+                        <option {{ (old('city') == 'munnar') ? 'selected' : '' }} value="munnar"> Munnar </option>
+                        <p id="city_err"></p>
+                         {!!$errors->first('city','<p>:message <p>')!!}           
+                     
                 </select>        
                 </td>
                 </tr>
                 <tr>
                     <td>Message:</td>
-                    <td> <textarea name="message" rows="5" cols="30">  </textarea>{!!$errors->first('message','<p>:message <p>')!!}</td>
+                    <td> <textarea name="message" rows="5" cols="30">{{ old('message') }}</textarea>
+                      <p id="message_err"></p>
+                    {!!$errors->first('message','<p>:message <p>')!!}</td>
                 </tr>
               
                 <tr>
@@ -67,7 +71,7 @@
                  &nbsp;
                     <td> <input type="submit"style="color: red"> </td>
                 </tr>
-              
+              </tbody>
         </table>
 
 @endsection

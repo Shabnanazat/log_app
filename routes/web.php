@@ -102,9 +102,9 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => 'Admin'], f
     Route::get('/','Admin\CategoryController@index')->name('index');
     Route::get('/create','Admin\CategoryController@create')->name('create');
     Route::post('/store','Admin\CategoryController@store')->name('store');
-    Route::get('/edit{id}','Admin\CategoryController@edit')->name('edit');
+    Route::get('/edit/{id}','Admin\CategoryController@edit')->name('edit');
     Route::post('/update','Admin\CategoryController@update')->name('update');
-    Route::post('/destroy{id}','Admin\CategoryController@destroy')->name('destroy');
+    Route::post('/destroy/{id}','Admin\CategoryController@destroy')->name('destroy');
   });
   Route::group(['prefix'=>'blogs','as'=>'blogs.','namespace'=>'User'],function (){
     Route::get('/','BlogController@index')->name('index');
@@ -113,6 +113,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => 'Admin'], f
     Route::get('/edit/{id}','BlogController@edit')->name('edit');
     Route::post('/update','BlogController@update')->name('update');
     Route::post('/destroy/{id}','BlogController@delete')->name('destroy');
+
   });
 
   Route::get('home','Website\FrontendController@index')->name('home');

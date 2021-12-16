@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Models;
 
+namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\softDelete;
-use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
-{
-    // use softDeletes;
-    use HasFactory;
 
-    //protected $table ='categories';
-    protected $fillable =['category_name','status',
+{
+    use HasFactory;
+    protected $fillable = ['category_name','status','icon'
     ];
-    public function blog(){
-        return $this->belogsTo(Blog::class);
+  // protected $appends = ['icon_url'];
+    public function getIconUrlAttribute()
+
+    {
+        return Storage::disk('public')->url('admin/category/'.$this->icon);
     }
+
 }
