@@ -51,10 +51,20 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('contact')}}" tabindex="-1">Contact</a>
-                    </li>
+                        </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="{{route('about')}}">About</a>
+
+                    </li>  
+                        <select id="language-switch" name='lang'>
+                        <option {{ (config('app.locale') == 'en') ? 'selected' : '' }} value='en'> Eng</option>
+                        <option {{ (config('app.locale') == 'ml') ? 'selected' : '' }} value='ml'>Malayalam</option>                                 
+                       </select>
+                         <div id="another_div"></div>
                     </ul>
 
                 </div>
-</nav>
+           </nav>
     </div>
 </nav>  

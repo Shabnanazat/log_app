@@ -15,7 +15,7 @@ class Blog extends Model
     
     // protected $guarded = array();
    protected $fillable = [
-      'tittle', 'description','status','slug','user_id','category_id','image',
+      'tittle', 'description','status','slug','user_id','category_id','image','is_approved'
     ];
     public function owner()
     {

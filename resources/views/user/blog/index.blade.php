@@ -57,7 +57,7 @@
         <td>{{ $blog->tittle }}</td>
         <td>{{ $blog->slug }}</td>
         <td>{{ $blog->description }}</td>
-        <td>{{ $blog->category }}</td>
+        <td>{{ $blog->category->category_name}}</td>
         {{-- <td> <img src="{{ asset('storage/blogs/blog_images/'.$blog->image) }}" alt="blog-image" ></td> --}}
        <td> <img class="img" src="{{ \Storage::disk('public')->url('blogs/blog_images/'.$blog['image']) }}"alt="blog-image" ></td>
         <td>

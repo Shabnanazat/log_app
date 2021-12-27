@@ -10,7 +10,7 @@
 @section('content')
  
 <h2> Add blogs types</h2>
-<form action="{{route('blogs.update')}}" method="post" enctype="multipart/form-data">
+<form action="{{route('blogPost.update')}}" method="post" enctype="multipart/form-data">
     
     @csrf
     <input type="hidden" name="blogs_id" value="{{ $blogs->id }}">
@@ -30,14 +30,16 @@
         @endforeach
         @endif
         </select><br>
-        <label for="status">status:</label><br> 
-        <select name="status">
-               <option value="1" @if($category->status == 1) selected="selected" @endif>Enable</option>
-               <option value="0" @if($category->status == 0) selected="selected" @endif>Disable</option>
         {{-- <label for="status">status:</label><br>
         <select name="status">
             <option {{ ($categories) }} value="1">Enable</option>
             <option value="0">Disable</option> --}}
+     <label for="status">status:</label><br> 
+     <select name="status">
+            <option value="1" @if($category->status == 1) selected="selected" @endif>Enable</option>
+            <option value="0" @if($category->status == 0) selected="selected" @endif>Disable</option>
+
+
         </select>
         <br>
         <input type="submit" value="Submit"> 

@@ -81,7 +81,7 @@ class CategoryController extends Controller
      
         $data = $request->except(['_token','category_id']);
         $doc = Category::find($request->category_id)->first();  
-        dd($doc) ;       
+        //dd($doc) ;       
         if ($request->hasFile('icon')) {         
            if(Storage::disk('public')->exists('admin/category/'.$doc['icon'])) {
                Storage::disk('public')->delete('admin/category/'.$doc['icon']);
@@ -113,5 +113,6 @@ class CategoryController extends Controller
          
         return redirect()->route('categories.index')->with('success','category deleted successfully');
     }
+    
     }
     

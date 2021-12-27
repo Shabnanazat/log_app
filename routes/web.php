@@ -98,6 +98,18 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => 'Admin'], f
     Route::post('/change-password','HomeController@changePasswordPost')->name('change.password.post');
   });
 
+  Route::group(['prefix'=>'blogPost','as'=>'blogPost.'],function (){
+    Route::get('/','Admin\BlogController@index')->name('index');
+    Route::get('/create','Admin\BlogController@create')->name('create');
+    Route::post('/store','Admin\BlogController@store')->name('store');
+    Route::get('/edit/{id}','Admin\BlogController@edit')->name('edit');
+    Route::post('/update','Admin\BlogController@update')->name('update');
+    Route::post('/destroy/{id}','Admin\BlogController@destroy')->name('destroy');
+    Route::post('/changeStatus', 'Admin\BlogController@changeStatus')->name('changeStatus');
+
+  });
+  
+
   Route::group(['prefix'=>'categories','as'=>'categories.'], function () {
     Route::get('/','Admin\CategoryController@index')->name('index');
     Route::get('/create','Admin\CategoryController@create')->name('create');
@@ -113,9 +125,8 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => 'Admin'], f
     Route::get('/edit/{id}','BlogController@edit')->name('edit');
     Route::post('/update','BlogController@update')->name('update');
     Route::post('/destroy/{id}','BlogController@delete')->name('destroy');
-
   });
-
+  Route::get ('about','Website\FrontendController@about')->name('about');
   Route::get('home','Website\FrontendController@index')->name('home');
   Route::get('blog','Website\FrontendController@blog')->name('blog.web');
   Route::get('blog-details/{id}','Website\FrontendController@details')->name('blog.details');
@@ -124,5 +135,6 @@ Route::group(['prefix' => '/admin', 'as' => 'admin.', 'namespace' => 'Admin'], f
 
 
 
-  
-  
+  Route::post('language-switch', 'Website\FrontendController@languageSwitch')->name('language-switch');
+
+ 

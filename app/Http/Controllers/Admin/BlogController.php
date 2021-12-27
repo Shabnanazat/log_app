@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogImage;
 use App\Models\Category;
-
-
+use Mail;
 class BlogController extends Controller
 {
     public function index()
     {
+    
         $blogs =Blog::with('category')->latest()->get();
-        // dd($blogs);
-        return view('user.blog.index',compact('blogs'));
+        //return $blogs;
+        return view('admin.blog.index',compact('blogs'));
     }
     public function create(){
          $categories= Category::all();
-        return view('user.blog.create',compact('categories'));
+        return view('admin.blog.create',compact('categories'));
     }
     public function store(Request $request)
     { 
@@ -59,9 +59,12 @@ class BlogController extends Controller
        public function edit(request $request,$id)
     {
        // dd($request->all());
+        $blogs = Blog::where('status', 1)->with('blogImages')->latest()->get();
         $blogs = Blog::find($id); 
         $categories = Category::all();
-        return view('user.blog.edit',compact('blogs','categories'));            
+
+        return view('admin.blog.edit',compact('blogs','categories'));     
+        
      
     }
     public function update(Request $request)
@@ -102,7 +105,7 @@ class BlogController extends Controller
  
              $blog = Blog::find($request->blogs_id)->update($data);
 
-        return redirect()->route('blogs.index')->with('success','Blog updated successfully');
+        return redirect()->route('blogPost.index')->with('success','Blog updated successfully');
 }}
         public function delete(Request $request,$id)
         {
@@ -114,34 +117,33 @@ class BlogController extends Controller
         }
            $doc->delete();
             
-            return redirect()->route('blogs.index')->with('success','blog deleted successfully');
+            return redirect()->route('blogPost.index')->with('success','blog deleted successfully');
         }
         public function imageUpload()
         {
             return view('imageUpload');
         }
-        // public function imageUploadPost(Request $request)
-        // {
-        //     $request->validate([
-        //         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //     ]);
-            
-        //     $image = time().'.'.$request->image->extension();           
-            
-        //     $request->image->move(public_path('images'), $image);
-        //     /* Store $imageName name in DATABASE from HERE */    
-        //     return back()
-        //         ->with('success','You have successfully upload image.')
-        //         ->with('image',$image); 
-        // }
         public function changeStatus(Request $request)
         {
-            $blog = User::find($request->blogs_id);
-            $blog->status = $request->status;
-            $blog->save();
+        //    dd($request->all());
+
+            $data=['gggg' => true];
+            // $blogstatus=Blog::
+            $blog = Blog::with('owner')-> find($request->blog_id);
+            $blog ->update(['is_approved'=>$request->value]);
+             if($blog)
+             {
+                Mail::send('mail.mail', $data, function($message) use( $blog){
+                $message->to('athena@netstager.in','Blog status changed');
+                $message->subject('Laravel Basic Testing Mail');
+                $message->from('sneha@netstager.in','BLOG ADMIN');
+            });
+             }
+          
       
-            return response()->json(['success'=>'Status change successfully.']);
+            return response()->json(['success'=>'Action change successfully.']);
         }
+      
         }
         
         

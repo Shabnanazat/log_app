@@ -8,10 +8,15 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Enquiry;
 use Validator;
+use about;
 class FrontendController extends Controller
 { 
     public function index(){
         return view('website.home');
+    }
+    public function about(){
+
+        return view('website.about');
     }
     public function blog(){
         $blogs = Blog::with('owner') ->latest()->where('status',1)->get();
@@ -46,6 +51,16 @@ class FrontendController extends Controller
            return back()->with('message','Sorry Action Failed !'); 
          }
         }
+        public function languageSwitch(Request $request)
+
+    {
+        $inputs = $request->validate(['locale' => 'required|string']);
+        if(in_array($inputs['locale'], ['en', 'ml'])) {
+            App::setLocale($inputs['locale']);
+        }
+        return response()->json([true, $inputs], 200);
+    }
+         
     }
 
 
